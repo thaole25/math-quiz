@@ -1,0 +1,40 @@
+{% block script %}
+<script src="/static/jquery.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $("form").submit(function(event){
+      if($('input[name=answer]').val().length > 0){
+        if($('input[name=answer]').val() == $('input[name=answerResult]').val()){
+          alert('Correct!');
+        }else{
+          $('div#result').text("Correct answer: " + $('input[name=answerResult]').val());
+          alert('Wrong!');
+        }
+      }else{
+        alert('Please type your answer!');
+        event.preventDefault();
+      }
+    });
+  });
+</script>
+{% endblock %}
+
+{% block title %}
+<title>Sum</title>
+{% endblock %}
+
+{% block content %}
+<form method="post" action="">
+  {% csrf_token %}
+  <div id="question">
+    <h3>{{ num1 }} + {{ num2 }} 
+      = <input id="number" type="number" name="answer" maxlength="4">
+    </h3>
+  </div>
+  <input class="button" id="submit" type="submit" value="Submit" />
+</form>
+<div id="answer">
+  <input type="hidden" name="answerResult" value="{{ answer}}">
+</div>
+<div id="result"></div>
+{% endblock %}
